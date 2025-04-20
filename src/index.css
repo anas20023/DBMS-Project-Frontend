@@ -1,0 +1,18 @@
+@import "tailwindcss";
+@custom-variant dark (&:where(.dark, .dark *));
+@theme {
+  --font-main: 'Inter', sans-serif;
+  --primary: #0f172a;         /* Dark navy blue */
+  --primary-light: #3b82f6;   /* Vivid sky blue */
+  --background: #f8fafc;      /* Soft white */
+  --background-dark: #1e293b; /* Slate dark */
+  --text-main: #0f172a;       /* Almost black */
+  --text-light: #f1f5f9;      /* Soft light text */
+  --accent: #6366f1;          /* Indigo */
+  --success: #10b981;         /* Emerald green */
+  --danger: #ef4444;          /* Red for errors */
+  --border: #e2e8f0;          /* Subtle border */
+}
+body {
+  font-family: var(--font-main);
+}

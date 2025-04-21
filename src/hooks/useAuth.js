@@ -1,0 +1,44 @@
+import { useState } from "react";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+
+const API_URL = "https://sgm.anasibnbelal.live/api/auth";
+
+export const useAuth = () => {
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+  const navigate = useNavigate();
+
+  const register = async (userData) => {
+    setLoading(true);
+    setError(null);
+    try {
+      const res = await axios.post(`${API_URL}/register`, userData);
+      console.log(res)
+      navigate('/login');
+    } catch (err) {
+      setError(err.response?.data?.message || 'Registration failed');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const login = async ({ student_Id, password }) => {
+    setLoading(true);
+    setError(null);
+    try {
+      const res = await axios.post(`${API_URL}/login`, { student_Id, password });
+      // Assuming response includes token and user
+      const { token, student } = res.data;
+      localStorage.setItem('token', token);
+      localStorage.setItem('student_id', student.student_Id);
+      navigate('/'); // redirect to home
+    } catch (err) {
+      setError(err.response?.data?.message || 'Login failed');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return { register, login, loading, error };
+};

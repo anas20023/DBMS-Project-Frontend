@@ -1,34 +1,66 @@
 import React from "react";
+import { FaStar, FaDownload, FaPaperclip } from "react-icons/fa";
 
-const SuggestionCard = ({ suggestion, onVote, loadingVote, studentId }) => {
-  const hasVoted = suggestion.hasVoted; // expecting backend flag
+const SuggestionCard = ({ suggestion, onVote, loadingVote }) => {
+  const hasVoted = suggestion.hasVoted;
+
   return (
-    <div className="bg-white dark:bg-slate-800 shadow-lg rounded-lg p-4 border border-slate-200 dark:border-slate-700 hover:shadow-xl transform hover:-translate-y-1 transition">
-      <h2 className="text-xl font-semibold text-slate-800 dark:text-white mb-2">
-        {suggestion.course_code} - {suggestion.course_name}
+    <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl p-5 shadow-md hover:shadow-lg transition-all duration-300">
+      {/* Header */}
+      <div className="flex justify-between items-start mb-2">
+        <div className="text-sm font-semibold text-slate-500 dark:text-slate-400">CSE</div>
+        <div className="flex items-center gap-1 text-sm font-medium text-slate-600 dark:text-slate-300">
+          Final Exam
+          <span className="ml-2 flex items-center gap-1 text-yellow-400">
+            {suggestion.stars}
+            <FaStar className="inline" />
+          </span>
+          <button
+            onClick={() => onVote(suggestion.id)}
+            disabled={loadingVote}
+            className={`ml-2 px-2 py-1 rounded text-xs font-semibold ${
+              hasVoted ? "bg-green-600" : "bg-rose-500"
+            } text-white`}
+          >
+            {hasVoted ? "Voted" : "Vote"}
+          </button>
+        </div>
+      </div>
+
+      {/* Course Title */}
+      <h2 className="text-lg sm:text-xl font-bold text-blue-600 dark:text-blue-400 mb-1">
+        {suggestion.course_name}
       </h2>
-      <p className="text-sm text-slate-600 dark:text-slate-300 mb-1">
-        Dept: {suggestion.dept} | Intake: {suggestion.intake} | Section: {suggestion.section}
-      </p>
-      <p className="text-sm text-slate-600 dark:text-slate-300 mb-1">Exam: {suggestion.exam_type}</p>
-      <p className="text-sm italic text-slate-500 dark:text-slate-400 mb-4">"{suggestion.description}"</p>
+      <div className="text-sm text-slate-500 dark:text-slate-400 mb-2">{suggestion.course_code}</div>
 
-      <div className="flex justify-between items-center">
-        <a href={suggestion.attachment_url} target="_blank" rel="noreferrer" className="px-4 py-2 bg-sky-600 text-white rounded-lg hover:bg-sky-700 transition text-sm">
-          View PDF
-        </a>
+      {/* Description */}
+      <div className="text-sm text-slate-700 dark:text-slate-300 whitespace-pre-line mb-4">
+        {suggestion.description}
+      </div>
 
-        <button
-          disabled={loadingVote}
-          onClick={() => onVote(suggestion.id)}
-          className={`text-sm px-3 py-1 rounded ${hasVoted ? 'bg-green-600' : 'bg-sky-600'} text-white`}
-        >
-          {hasVoted ? 'Voted' : 'Upvote'}
-        </button>
+      {/* Attachments */}
+      <div className="mb-4">
+        <div className="text-sm font-medium text-slate-600 dark:text-slate-400 mb-1">Attachments</div>
+        <div className="flex items-center gap-2 text-slate-500 dark:text-slate-300 text-sm">
+          <FaPaperclip />
+          <span className="truncate max-w-[200px]">{suggestion.attachment_url.substr(43)}</span>
+          <a
+            href={suggestion.attachment_url}
+            target="_blank"
+            rel="noreferrer"
+            className="ml-auto bg-rose-500 hover:bg-rose-600 text-white px-3 py-1 rounded text-xs flex items-center gap-1"
+          >
+            <FaDownload />
+            Download
+          </a>
+        </div>
+      </div>
 
-        <span className="text-sm text-slate-500 dark:text-slate-400">
-          ⭐ {suggestion.stars}
-        </span>
+      {/* Footer Info */}
+      <div className="flex justify-end text-sm text-slate-500 dark:text-slate-400">
+        <span>Intake {suggestion.intake}</span>
+        <span className="mx-2">|</span>
+        <span>Section {suggestion.section}</span>
       </div>
     </div>
   );

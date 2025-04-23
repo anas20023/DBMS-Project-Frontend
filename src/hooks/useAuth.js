@@ -14,7 +14,7 @@ export const useAuth = () => {
     setError(null);
     try {
       const res = await axios.post(`${API_URL}/register`, userData);
-      console.log(res)
+      console.log(res);
       navigate('/login');
     } catch (err) {
       setError(err.response?.data?.message || 'Registration failed');
@@ -23,16 +23,17 @@ export const useAuth = () => {
     }
   };
 
-  const login = async ({ student_Id, password }) => {
+  const login = async ({ studentId, password }) => {
     setLoading(true);
     setError(null);
     try {
-      const res = await axios.post(`${API_URL}/login`, { student_Id, password });
-      // Assuming response includes token and user
-      const { token, student } = res.data;
-      localStorage.setItem('token', token);
-      localStorage.setItem('student_id', student.student_Id);
-      navigate('/'); 
+      const res = await axios.post(`${API_URL}/login`, { studentId, password });
+      const { student } = res.data;
+
+      localStorage.setItem('student_id', student.student_Id );
+      localStorage.setItem('student_all', JSON.stringify(student));  
+
+      navigate('/');
     } catch (err) {
       setError(err.response?.data?.message || 'Login failed');
     } finally {
@@ -40,5 +41,11 @@ export const useAuth = () => {
     }
   };
 
-  return { register, login, loading, error };
+  const logout = () => {
+    localStorage.removeItem('student_id');
+    localStorage.removeItem('student_all');
+    navigate('/login');
+  };
+
+  return { register, login, logout, loading, error };
 };

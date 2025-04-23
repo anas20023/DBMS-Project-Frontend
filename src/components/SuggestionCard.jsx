@@ -2,8 +2,11 @@ import React from "react";
 import { FaStar, FaDownload, FaPaperclip } from "react-icons/fa";
 
 const SuggestionCard = ({ suggestion, onVote, loadingVote }) => {
-  const hasVoted = suggestion.hasVoted;
-
+  let hasVoted = suggestion.uploaded_by;
+  if(!localStorage.getItem("student_all")){
+    hasVoted=false;
+  }
+  //if(localStorage.getItem("student_all"))
   return (
     <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl p-5 shadow-md hover:shadow-lg transition-all duration-300">
       {/* Header */}

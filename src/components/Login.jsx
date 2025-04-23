@@ -7,17 +7,17 @@ import { Link } from "react-router-dom";
 
 const Login = () => {
   const { login, loading, error } = useAuth();
-  const [form, setForm] = useState({ student_Id: "", password: "" });
+  const [form, setForm] = useState({ studentId: "", password: "" });
 
   const handleChange = (e) =>
     setForm({ ...form, [e.target.name]: e.target.value });
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    login({ student_Id: form.student_Id, password: form.password })
+    login({ studentId: form.studentId, password: form.password })
       .then((res) => {
         if (res?.success) {
-          toast.success("Login successful!");
+          toast.success("Login successful!"); 
         }
       })
       .catch((err) => {
@@ -29,7 +29,7 @@ const Login = () => {
   useEffect(() => {
     if (error) {
       toast.error(error);
-      setForm({student_Id: "", password: ""});
+      setForm({studentId: "", password: ""});
     }
   }, [error]);
 
@@ -55,9 +55,9 @@ const Login = () => {
       <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-5">
         <input
           type="text"
-          name="student_Id"
+          name="studentId"
           placeholder="Student ID"
-          value={form.student_Id}
+          value={form.studentId}
           onChange={handleChange}
           className="w-full px-3 py-2 sm:px-4 sm:py-3 text-sm sm:text-base border border-slate-300 dark:border-slate-600 rounded-md bg-slate-50 dark:bg-slate-700 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
           required
@@ -65,7 +65,7 @@ const Login = () => {
         <input
           type="password"
           name="password"
-          placeholder="Password"
+          placeholder="password"
           value={form.password}
           onChange={handleChange}
           className="w-full px-3 py-2 sm:px-4 sm:py-3 text-sm sm:text-base border border-slate-300 dark:border-slate-600 rounded-md bg-slate-50 dark:bg-slate-700 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500"

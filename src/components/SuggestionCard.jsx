@@ -18,7 +18,7 @@ const SuggestionCard = ({ suggestion, onVote, loadingVote }) => {
           <button
             onClick={() => onVote(suggestion.id)}
             disabled={loadingVote}
-            className={`ml-2 px-2 py-1 rounded text-xs font-semibold ${
+            className={`ml-2 px-2 py-1 rounded text-xs font-semibold cursor-pointer ${
               hasVoted ? "bg-green-600" : "bg-rose-500"
             } text-white`}
           >
@@ -28,7 +28,7 @@ const SuggestionCard = ({ suggestion, onVote, loadingVote }) => {
       </div>
 
       {/* Course Title */}
-      <h2 className="text-lg sm:text-xl font-bold text-blue-600 dark:text-blue-400 mb-1">
+      <h2 className="text-lg bg-blue-600 sm:text-xl font-bold text-white dark:text-white my-2 px-4 py-1 rounded">
         {suggestion.course_name}
       </h2>
       <div className="text-sm text-slate-500 dark:text-slate-400 mb-2">{suggestion.course_code}</div>

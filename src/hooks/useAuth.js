@@ -32,7 +32,7 @@ export const useAuth = () => {
       const { token, student } = res.data;
       localStorage.setItem('token', token);
       localStorage.setItem('student_id', student.student_Id);
-      navigate('/'); // redirect to home
+      navigate('/'); 
     } catch (err) {
       setError(err.response?.data?.message || 'Login failed');
     } finally {

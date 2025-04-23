@@ -1,3 +1,4 @@
+/* eslint-disable no-empty */
 import { useState, useEffect, useMemo } from "react";
 import axios from "axios";
 

@@ -12,7 +12,7 @@ const HomeContent = () => {
 
   const studentId = localStorage.getItem("student_id");
 
-  const handleVote = async (suggestionId) => {
+  const handleVote = async (suggestionId) => { 
     if (!studentId) return navigate('/login');
     setLoadingVote(true);
     try {
@@ -48,7 +48,7 @@ const HomeContent = () => {
         {loading ? (
           <div className="col-span-full text-center text-slate-500 dark:text-slate-400">Loading suggestions...</div>
         ) : error ? (
-          <div className="col-span-full text-center text-red-600 dark:text-red-400">{error}</div>
+          <div className="col-span-full text-center text-red-600 dark:text-red-400">{`${error} or No Suggetions Found`}</div>
         ) : (
           suggestions.map(sug => (
             <SuggestionCard

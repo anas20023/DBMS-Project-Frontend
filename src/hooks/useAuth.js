@@ -44,7 +44,7 @@ export const useAuth = () => {
   const logout = () => {
     localStorage.removeItem('student_id');
     localStorage.removeItem('student_all');
-    navigate('/login');
+    navigate('/');
   };
 
   return { register, login, logout, loading, error };

@@ -6,6 +6,8 @@ const SuggestionCard = ({ suggestion, onVote, loadingVote }) => {
   if(!localStorage.getItem("student_all")){
     hasVoted=false;
   }
+  let attachmnent_name = suggestion.course_name.toLowerCase().replace(/\s+/g, "_");
+  //console.log(suggestion)
   //if(localStorage.getItem("student_all"))
   return (
     <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl p-5 shadow-md hover:shadow-lg transition-all duration-300">
@@ -46,7 +48,7 @@ const SuggestionCard = ({ suggestion, onVote, loadingVote }) => {
         <div className="text-sm font-medium text-slate-600 dark:text-slate-400 mb-1">Attachments</div>
         <div className="flex items-center gap-2 text-slate-500 dark:text-slate-300 text-sm">
           <FaPaperclip />
-          <span className="truncate max-w-[200px]">{suggestion.attachment_url.substr(43)}</span>
+          <span className="truncate max-w-[200px]">{`${attachmnent_name}.${suggestion.attachment_url.substr(-3)}`}</span>
           <a
             href={suggestion.attachment_url}
             target="_blank"

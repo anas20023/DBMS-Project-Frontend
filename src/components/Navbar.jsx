@@ -17,7 +17,7 @@ const Navbar = () => {
 
   useEffect(() => {
     document.documentElement.classList.toggle("dark", theme === "dark");
-    localStorage.setItem("theme", theme); // Save to localStorage
+    localStorage.setItem("theme", theme);
   }, [theme]);
 
   const toggleTheme = () => {
@@ -48,12 +48,9 @@ const Navbar = () => {
           </Link>
 
           <ul className="flex gap-6 text-sm font-medium text-gray-700 dark:text-gray-300 items-center">
-            {/* Theme Toggle */}
             <li onClick={toggleTheme} className="cursor-pointer">
               {theme === "light" ? <Moon size={20} /> : <Sun size={20} />}
             </li>
-
-            {/* Conditional Auth Buttons */}
             {student ? (
               <li onClick={toggleSidebar} className="cursor-pointer">
                 <div className="w-9 h-9 rounded-full bg-blue-600 text-white flex items-center justify-center hover:bg-blue-700 transition">
@@ -64,7 +61,7 @@ const Navbar = () => {
               <li>
                 <Link
                   to="/login"
-                  className="bg-blue-600 text-white px-4 py-3 rounded hover:bg-blue-700 dark:bg-blue-800 dark:hover:bg-blue-700 transition-all duration-300"
+                  className="bg-blue-600 text-white px-4 py-3 rounded hover:bg-blue-700 dark:bg-blue-800 dark:hover:bg-blue-600 transition-all duration-300"
                 >
                   Login/Signup
                 </Link>
@@ -74,10 +71,10 @@ const Navbar = () => {
         </div>
       </nav>
 
-      {/* Sidebar Modal */}
       {student && sidebarOpen && (
         <div
-          className="fixed top-20 right-20 w-72 bg-slate-100 dark:bg-slate-900 rounded-lg shadow-2xl p-5 z-50"
+          className="fixed top-16 right-6 w-72 rounded-xl p-6 z-50 \
+                         bg-white/60 dark:bg-gray-900/60 backdrop-blur-lg border border-gray-200 dark:border-gray-600 shadow-lg shadow-gray-300/30 dark:shadow-black/40"
         >
           <button
             onClick={toggleSidebar}
@@ -86,31 +83,31 @@ const Navbar = () => {
             ✖
           </button>
 
-          <div className="mt-4">
-            <h2 className="text-xl font-bold text-gray-800 dark:text-amber-300 mb-4">
+          <div className="mt-5">
+            <h2 className="text-xl font-semibold text-gray-900 dark:text-amber-300 mb-3">
               {student.name}
             </h2>
-            <p className="text-gray-600 dark:text-gray-400 mb-2 text-sm">ID: {student.student_Id}</p>
-            <p className="text-gray-600 dark:text-gray-400 mb-6 text-sm">Total Stars: {student.stars}</p>
+            <p className="text-gray-700 dark:text-gray-100 mb-1 text-sm">ID: {student.student_Id}</p>
+            <p className="text-gray-700 dark:text-gray-100 mb-4 text-sm">Stars: {student.stars}</p>
 
             <div className="flex flex-col gap-3">
               <Link
                 to="/profile"
                 onClick={() => setSidebarOpen(false)}
-                className=" text-slate-900 dark:text-white dark:hover:text-slate-100 hover:text-blue-600"
+                className="px-3 py-2 rounded hover:bg-gray-100 dark:hover:bg-gray-800 transition text-gray-800 dark:text-gray-100"
               >
                 Profile
               </Link>
               <Link
                 to="/upload"
                 onClick={() => setSidebarOpen(false)}
-                className=" text-slate-900 dark:text-white dark:hover:text-slate-100 hover:text-blue-600"
+                className="px-3 py-2 rounded hover:bg-gray-100 dark:hover:bg-gray-800 transition text-gray-800 dark:text-gray-100"
               >
                 Upload Suggestion
               </Link>
               <button
                 onClick={handleLogout}
-                className="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700"
+                className="w-full bg-red-600 text-white py-2 rounded hover:bg-red-700 transition"
               >
                 Logout
               </button>

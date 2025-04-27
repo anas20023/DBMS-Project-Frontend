@@ -29,7 +29,9 @@ const Navbar = () => {
     localStorage.removeItem("student_all");
     setStudent(null);
     setSidebarOpen(false);
-    navigate("/login");
+    navigate("/");
+  // refesh the page to remove the sidebar
+    window.location.reload();
   };
 
   const toggleSidebar = () => {

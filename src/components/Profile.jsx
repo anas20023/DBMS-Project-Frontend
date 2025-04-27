@@ -1,15 +1,29 @@
 import Navbar from "./Navbar";
+import { useEffect, useState } from "react";
+import { info } from "../utils/studentinfo.js";
+import avatari from "../assets/avatar.png";
 
 const Profile = () => {
-  const user = {
-    name: "John Doe",
-    student_id: "CSE210301",
-    dept: "CSE",
-    intake: "47",
-    section: "A",
-    stars: 12,
-    avatar: "https://ui-avatars.com/api/?name=Anas+Doe&background=random"
-  };
+  //console.log(info);
+  const [user, setUser] = useState({
+    name: "",
+    student_id: "",
+    dept: "",
+    intake: "",
+    section: "",
+    stars: "",
+  });
+  useEffect(() => {
+    // Simulate fetching user data from an API or local storage
+    const fetchUserData = () => {
+      // Replace this with actual data fetching logic
+      const userData = info;
+      setUser(userData);
+    };
+
+    fetchUserData();
+  }, []);
+
 
   return (
     <>
@@ -19,7 +33,7 @@ const Profile = () => {
           {/* Avatar & Name */}
           <div className="flex flex-col sm:flex-row items-center sm:items-start gap-6">
             <img
-              src={user.avatar}
+              src={avatari}
               alt="User Avatar"
               className="w-24 h-24 sm:w-28 sm:h-28 rounded-full object-cover shadow-md border-4 border-slate-300 dark:border-slate-700"
             />
@@ -28,7 +42,7 @@ const Profile = () => {
                 {user.name}
               </h2>
               <p className="text-slate-600 dark:text-slate-300 text-sm sm:text-base">
-                Student ID: {user.student_id}
+                Student ID: {user.student_Id}
               </p>
             </div>
           </div>
@@ -46,8 +60,8 @@ const Profile = () => {
             </div>
             <div className="flex items-center gap-2">
               <span className="font-semibold">Stars:</span>
-              <span className="inline-flex items-center gap-1 bg-yellow-400 text-white px-3 py-1 rounded-full font-bold shadow">
-                ⭐ {user.stars}
+              <span className="inline-flex items-center gap-1 px-1 py-1 rounded-full font-bold">
+                 {user.stars}{"0"}
               </span>
             </div>
           </div>

@@ -51,7 +51,7 @@ const SuggestionCard = ({ suggestion, onVote, loadingVote, st_id }) => {
           CSE
         </div>
         <div className="flex items-center gap-1 text-sm font-medium text-slate-600 dark:text-slate-300">
-          <span className="text-white bg-orange-600 px-2 py-1 rounded">
+          <span className={`text-white ${suggestion.exam_type!=="Midterm"?"bg-[#2E073F]":"bg-[#7A1CAC]"} px-2 py-1 rounded`}>
             {suggestion.exam_type}
           </span>
           <span className="ml-2 flex items-center gap-1 text-yellow-400">

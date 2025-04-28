@@ -3,7 +3,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import avatari from "../assets/avatar.png";
 import { info } from "../utils/studentinfo";
-
+import Loader from "./Loader";
 const Profile = () => {
   // console.log(info)
   const [user, setUser] = useState({
@@ -58,7 +58,7 @@ const Profile = () => {
     <>
       <Navbar />
       <section className="min-h-screen bg-slate-100 dark:bg-slate-900 flex flex-col items-center px-4 py-10">
-        {loading ? <p className="p-4 text-center">Loading...</p> : <div className="w-full max-w-2xl bg-white dark:bg-slate-800 rounded-3xl shadow-2xl p-6 sm:p-10 transition-all duration-300">
+        {loading ? <Loader/> : <div className="w-full max-w-2xl bg-white dark:bg-slate-800 rounded-3xl shadow-2xl p-6 sm:p-10 transition-all duration-300">
           <div className="flex flex-col sm:flex-row items-center gap-6">
             <img
               src={avatari}
@@ -86,11 +86,11 @@ const Profile = () => {
           {suggestions.length ? (
             <ul className="mt-4 space-y-4">
               {suggestions.map((s, i) => (
-                <li key={i} className="p-4 bg-slate-50 dark:bg-slate-700 rounded-xl">
+                <li key={i} className="p-4 bg-slate-100 dark:bg-slate-700 rounded-xl">
                   <div className="flex justify-between">
                     <div>
-                      <p className="font-bold">{s.course_code} - {s.course_name}</p>
-                      <p className="text-sm">Type: {s.exam_type}</p>
+                      <p className="font-bold text-blue-600 dark:text-white">{s.course_code} - {s.course_name}</p>
+                      <p className="text-sm text-slate-800 dark:text-white">Type: {s.exam_type}</p>
                     </div>
                     <span className="font-semibold">⭐ {s.stars}</span>
                   </div>
@@ -99,7 +99,7 @@ const Profile = () => {
                     href={s.attachment_url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="mt-2 inline-block text-blue-600 hover:underline"
+                    className="mt-2 inline-block text-blue-600 dark:text-white hover:underline"
                   >
                     View Attachment
                   </a>

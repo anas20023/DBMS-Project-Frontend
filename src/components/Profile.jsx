@@ -2,10 +2,8 @@ import Navbar from "./Navbar";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import avatari from "../assets/avatar.png";
-import { info } from "../utils/studentinfo";
 import Loader from "./Loader";
 const Profile = () => {
-  // console.log(info)
   const [user, setUser] = useState({
     name: "",
     student_id: "",
@@ -20,11 +18,12 @@ const Profile = () => {
   const [error, setError] = useState(null);
 
   useEffect(() => {
+    const id = localStorage.getItem("student_id");
     const fetchProfile = async () => {
       try {
         const res = await axios.get(
           "https://sgm.anasibnbelal.live/api/auth/profile",
-          { params: { id: info.student_Id } }
+          { params: { id} }
         );
         // Response shape: { rows: [{...}], sugs: [...] }
         const data = res.data;

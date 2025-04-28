@@ -1,1 +1,1 @@
-export const info = JSON.parse(localStorage.getItem('student_all') || '{}');
+export const info = JSON.parse(localStorage.getItem('student_id') || '{}');

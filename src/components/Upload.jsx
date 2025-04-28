@@ -107,7 +107,7 @@ export default function Upload() {
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {[
-                { label: "Course Code", name: "course_code" },
+                { label: "Course Code ", name: "course_code" },
                 { label: "Course Name", name: "course_name" },
                 { label: "Department", name: "dept" },
                 { label: "Intake", name: "intake" },
@@ -139,7 +139,7 @@ export default function Upload() {
                 className="block text-gray-700 dark:text-gray-300 mb-1"
                 htmlFor="exam_type"
               >
-                Exam Type
+                Exam Type <span className="text-red-500">*</span>
               </label>
               <select
                 name="exam_type"
@@ -168,7 +168,7 @@ export default function Upload() {
                 htmlFor="description"
                 className="absolute left-0 -top-3 text-gray-600 dark:text-gray-400 text-sm transition-all peer-placeholder-shown:top-2 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 peer-focus:-top-3 peer-focus:text-sm peer-focus:text-blue-500"
               >
-                Description
+                Description <span className="text-red-500">*</span>
               </label>
             </div>
 

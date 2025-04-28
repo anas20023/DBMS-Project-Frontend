@@ -27,6 +27,7 @@ const Navbar = () => {
   const handleLogout = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("student_all");
+    localStorage.removeItem("student_id");
     setStudent(null);
     setSidebarOpen(false);
     navigate("/");

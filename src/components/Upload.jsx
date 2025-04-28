@@ -39,10 +39,10 @@ export default function Upload() {
       // 1) Upload file to Cloudinary
       const data = new FormData();
       data.append("file", formData.file);
-      data.append("upload_preset", "suggestion_preset");
+      data.append("upload_preset", import.meta.env.VITE_CL_PRESET);
 
       const cloudRes = await axios.post(
-        `https://api.cloudinary.com/v1_1/${'dv7sp7pxk'}/upload`,
+        `https://api.cloudinary.com/v1_1/${import.meta.env.VITE_CL_KEY}/upload`,
         data
       );
 

@@ -64,7 +64,7 @@ const SuggestionCard = ({ suggestion, onVote, loadingVote, st_id }) => {
             className={`ml-2 px-2 py-1 rounded text-xs font-semibold ${
               hasVoted
                 ? "bg-green-600 cursor-not-allowed"
-                : "bg-rose-500 hover:bg-rose-600"
+                : "bg-rose-500 hover:bg-rose-600 cursor-pointer"
             } text-white`}
           >
             {hasVoted ? "Voted" : "Vote"}

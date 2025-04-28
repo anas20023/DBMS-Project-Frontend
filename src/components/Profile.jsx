@@ -2,8 +2,10 @@ import Navbar from "./Navbar";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import avatari from "../assets/avatar.png";
+import { info } from "../utils/studentinfo";
 
 const Profile = () => {
+  // console.log(info)
   const [user, setUser] = useState({
     name: "",
     student_id: "",
@@ -22,7 +24,7 @@ const Profile = () => {
       try {
         const res = await axios.get(
           "https://sgm.anasibnbelal.live/api/auth/profile",
-          { params: { id: "20234103372" } }
+          { params: { id: info.student_Id } }
         );
         // Response shape: { rows: [{...}], sugs: [...] }
         const data = res.data;
@@ -49,14 +51,14 @@ const Profile = () => {
     fetchProfile();
   }, []);
 
-  if (loading) return <p className="p-4 text-center">Loading...</p>;
+  // if (loading) return ;
   if (error) return <p className="p-4 text-red-500 text-center">{error}</p>;
 
   return (
     <>
       <Navbar />
       <section className="min-h-screen bg-slate-100 dark:bg-slate-900 flex flex-col items-center px-4 py-10">
-        <div className="w-full max-w-2xl bg-white dark:bg-slate-800 rounded-3xl shadow-2xl p-6 sm:p-10 transition-all duration-300">
+        {loading ? <p className="p-4 text-center">Loading...</p> : <div className="w-full max-w-2xl bg-white dark:bg-slate-800 rounded-3xl shadow-2xl p-6 sm:p-10 transition-all duration-300">
           <div className="flex flex-col sm:flex-row items-center gap-6">
             <img
               src={avatari}
@@ -113,7 +115,7 @@ const Profile = () => {
               Edit Profile
             </button>
           </div>
-        </div>
+        </div>}
       </section>
     </>
   );

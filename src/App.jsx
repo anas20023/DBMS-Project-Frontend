@@ -5,7 +5,7 @@ import Login from "./components/Login"
 import Register from "./components/Register"
 import Profile from "./components/Profile"
 import Upload from "./components/Upload"
-import PrivateRoute from "./PrivateRoute"; 
+import PrivateRoute from "./PrivateRoute";
 
 function App() {
   return (
@@ -13,7 +13,7 @@ function App() {
       <Route path="/" element={<Home />} />
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
-      
+
       {/* Protect these routes */}
       <Route path="/profile" element={
         <PrivateRoute>
@@ -25,7 +25,7 @@ function App() {
           <Upload />
         </PrivateRoute>
       } />
-      
+
       <Route path="*" element={<NotFound />} />
     </Routes>
   )

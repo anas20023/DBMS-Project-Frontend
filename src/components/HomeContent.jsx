@@ -4,6 +4,7 @@ import axios from "axios";
 import Filters from "./Filters";
 import SuggestionCard from "./SuggestionCard";
 import { useSuggestions } from "../hooks/useSuggestions";
+import Loader from "./Loader";
 
 const HomeContent = () => {
   const [loadingVoteId, setLoadingVoteId] = useState(null);
@@ -68,9 +69,7 @@ const HomeContent = () => {
       {/* Suggestions Grid */}
       <div className="w-full max-w-6xl mx-auto grid gap-6 sm:grid-cols-2 lg:grid-cols-2 px-3">
         {loading ? (
-          <div className="col-span-full text-center text-slate-500 dark:text-slate-400">
-            Loading suggestions...
-          </div>
+         <Loader />
         ) : error ? (
           <div className="col-span-full text-center text-red-600 dark:text-red-400">
             {error} or No Suggestions Found
@@ -81,7 +80,7 @@ const HomeContent = () => {
               key={sug.id}
               suggestion={sug}
               onVote={() => handleVote(sug.id)}
-              voted={Boolean(sug.voted_state)}   // pass down voted flag
+              voted={Boolean(sug.voted_state)}   
               st_id={studentId}
               loadingVote={loadingVoteId === sug.id}
             />

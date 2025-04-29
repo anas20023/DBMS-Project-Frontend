@@ -11,7 +11,7 @@ const SuccessModal = ({ message, onClose }) => {
           animate={{ y: 0, opacity: 1, scale: 1 }}
           exit={{ y: -100, opacity: 0, scale: 0.9 }}
           transition={{ type: "spring", stiffness: 300, damping: 25 }}
-          className="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-xl shadow-2xl p-8 w-80 relative"
+          className="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-xl shadow-2xl p-8 w-[450px] h-[180px] relative"
         >
           <button
             onClick={onClose}
@@ -20,7 +20,7 @@ const SuccessModal = ({ message, onClose }) => {
             <IoMdClose size={24} />
           </button>
           <h2 className="text-2xl font-bold text-gray-800 dark:text-gray-100 mb-3 text-center">
-            🎉 Success!
+            {message === "You are already subscribed! Please use another email address." ? " ⚠️Already Subscribed!" : "🔥 Subscription Successful!"}
           </h2>
           <p className="text-sm text-gray-600 dark:text-gray-300 text-center">
             {message}

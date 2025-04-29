@@ -5,16 +5,20 @@ import { BiLogoGmail } from "react-icons/bi";
 import { Link } from "react-router-dom";
 import SuccessModal from "./Modal";
 const Footer = () => {
+  const [loading, setLoading] = useState(false);
   const [email, setEmail] = useState("");
+  const [message, setMessage] = useState(`Thanks for subscribing, ${email}! You'll be the first to know about new suggestions.`);
   const [showModal, setShowModal] = useState(false);
 
   const handleSubmit = async (e) => {
+
     e.preventDefault();
     const emailValue = e.target[0].value;
     setEmail(emailValue);
+    setLoading(true);
 
     try {
-      const response = await fetch("/api/subscribe", {
+      const response = await fetch("http://localhost:5000/api/email/sent", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email: emailValue }),
@@ -22,12 +26,18 @@ const Footer = () => {
 
       if (!response.ok) throw new Error("Subscription failed");
       // setShowModal(true);
-      setEmail("");
-    } catch (err) {
-      console.error(err);
       setShowModal(true);
-      e.target[0].value="";
-     
+      e.target[0].value = "";
+      setEmail("");
+      setLoading(false);
+    } catch (err) {
+      // Handle error (e.g., show a message to the user)
+      setMessage("You are already subscribed! Please use another email address.");
+      setShowModal(true);
+      e.target[0].value = "";
+      console.error(err);
+      setLoading(false);
+
     }
   };
 
@@ -53,7 +63,7 @@ const Footer = () => {
               </div>
             </div>
 
-            {/* Email Subscription */}
+      
             <div className="w-full sm:w-96">
               <h3 className="text-lg font-semibold text-gray-800 dark:text-gray-100 mb-2 flex items-center gap-2">
                 <BiLogoGmail size={20} className="text-red-600 dark:text-white" /> Stay Updated
@@ -70,10 +80,13 @@ const Footer = () => {
                 />
                 <button
                   type="submit"
-                  className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition"
+                  className={`${loading ? "cursor-not-allowed bg-blue-400" : "bg-blue-600 hover:bg-blue-700"
+                    } text-white px-4 py-2 rounded transition`}
+                  disabled={loading}
                 >
-                  Subscribe
+                  {loading ? "Subscribing..." : "Subscribe"}
                 </button>
+
               </form>
             </div>
           </div>
@@ -87,7 +100,7 @@ const Footer = () => {
 
       {showModal && (
         <SuccessModal
-          message={`Thanks for subscribing, ${email}! You'll be the first to know about new suggestions.`}
+          message={message}
           onClose={() => setShowModal(false)}
         />
       )}

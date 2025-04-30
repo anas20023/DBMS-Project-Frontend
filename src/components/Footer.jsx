@@ -18,7 +18,7 @@ const Footer = () => {
     setLoading(true);
 
     try {
-      const response = await fetch("http://localhost:5000/api/email/sent", {
+      const response = await fetch("https://sgm.anasibnbelal.live/api/email/sent", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email: emailValue }),

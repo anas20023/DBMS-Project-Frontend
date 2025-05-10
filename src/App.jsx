@@ -6,6 +6,7 @@ import Register from "./components/Register"
 import Profile from "./components/Profile"
 import Upload from "./components/Upload"
 import PrivateRoute from "./PrivateRoute";
+import Manage from "./pages/Manage"
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
       <Route path="/" element={<Home />} />
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
+      <Route path="/manage" element={<Manage />} />
 
       {/* Protect these routes */}
       <Route path="/profile" element={

@@ -1,18 +1,12 @@
 import { Link, useNavigate } from "react-router-dom";
-import { Sun, Moon, UserCircle } from "lucide-react";
+import { Sun, Moon, UserCircle, LogOut, UploadCloud, User } from "lucide-react";
 import logo from "../assets/logo.png";
 import { useEffect, useState } from "react";
 
 const Navbar = () => {
-  const [theme, setTheme] = useState(() => {
-    return localStorage.getItem("theme") || "light";
-  });
+  const [theme, setTheme] = useState(() => localStorage.getItem("theme") || "light");
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const [student, setStudent] = useState(() => {
-    const stored = localStorage.getItem("student_all");
-    return stored ? JSON.parse(stored) : null;
-  });
-
+  const [student, setStudent] = useState(() => JSON.parse(localStorage.getItem("student_all")));
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -20,10 +14,8 @@ const Navbar = () => {
     localStorage.setItem("theme", theme);
   }, [theme]);
 
-  const toggleTheme = () => {
-    setTheme(prev => (prev === "light" ? "dark" : "light"));
-  };
-
+  const toggleTheme = () => setTheme(prev => prev === "light" ? "dark" : "light");
+  
   const handleLogout = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("student_all");
@@ -31,93 +23,101 @@ const Navbar = () => {
     setStudent(null);
     setSidebarOpen(false);
     navigate("/");
-  // refesh the page to remove the sidebar
-    window.location.reload();
-  };
-
-  const toggleSidebar = () => {
-    setSidebarOpen(!sidebarOpen);
   };
 
   return (
     <>
-      <nav className="bg-white dark:bg-gray-900 shadow-md py-5 px-6 sticky top-0 z-50">
-        <div className="w-full max-w-6xl mx-auto flex justify-between items-center">
-          <Link to="/" className="flex items-center gap-2">
-            <img src={logo} alt="Logo" className="w-8 h-8" />
-            <span className="text-lg font-bold text-slate-800 dark:text-amber-300 hidden sm:inline">
-              Suggestion Sharing Platform
+      <nav className="bg-white/80 dark:bg-gray-900/80 backdrop-blur-lg border-b border-gray-200 dark:border-gray-700 py-4 px-6 sticky top-0 z-50 shadow-sm">
+        <div className="max-w-7xl mx-auto flex justify-between items-center">
+          <Link to="/" className="flex items-center gap-3 group">
+            <img 
+              src={logo} 
+              alt="Logo" 
+              className="w-9 h-9 transition-transform group-hover:scale-105" 
+            />
+            <span className="text-xl font-bold bg-gradient-to-r from-blue-600 to-teal-500 bg-clip-text text-transparent dark:from-blue-400 dark:to-teal-300">
+              Suggy
             </span>
           </Link>
 
-          <ul className="flex gap-6 text-sm font-medium text-gray-700 dark:text-gray-300 items-center">
-            <li onClick={toggleTheme} className="cursor-pointer">
-              {theme === "light" ? <Moon size={20} /> : <Sun size={20} />}
-            </li>
+          <div className="flex items-center gap-6">
+            <button
+              onClick={toggleTheme}
+              className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors cursor-pointer"
+              aria-label="Toggle theme"
+            >
+              {theme === "light" ? (
+                <Moon size={22} className="text-gray-700 dark:text-gray-300" />
+              ) : (
+                <Sun size={22} className="text-gray-700 dark:text-gray-300" />
+              )}
+            </button>
+
             {student ? (
-              <li onClick={toggleSidebar} className="cursor-pointer">
-                <div className="w-9 h-9 rounded-full bg-blue-600 text-white flex items-center justify-center hover:bg-blue-700 transition">
-                  <UserCircle size={24} />
-                </div>
-              </li>
-            ) : (
-              <li>
-                <Link
-                  to="/login"
-                  className="bg-blue-600 text-white px-4 py-3 rounded hover:bg-blue-700 dark:bg-blue-800 dark:hover:bg-blue-600 transition-all duration-300"
+              <div className="relative">
+                <button
+                  onClick={() => setSidebarOpen(!sidebarOpen)}
+                  className="w-10 h-10 cursor-pointer rounded-full bg-gradient-to-br from-blue-500 to-teal-400 flex items-center justify-center hover:shadow-lg transition-all"
+                  aria-label="User menu"
                 >
-                  Login/Signup
-                </Link>
-              </li>
+                  <UserCircle size={24} className="text-white" />
+                </button>
+
+                {sidebarOpen && (
+                  <div className="fixed inset-0 bg-black/20 dark:bg-white/10 backdrop-blur-sm z-40" 
+                       onClick={() => setSidebarOpen(false)}>
+                    <div className="absolute top-16 right-4 sm:right-6 w-72 bg-white/90 dark:bg-gray-900/90 backdrop-blur-xl rounded-xl p-5 border border-gray-200 dark:border-gray-700 shadow-2xl animate-slide-in">
+                      <div className="flex flex-col gap-4">
+                        <div className="pb-4 border-b border-gray-100 dark:border-gray-800">
+                          <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
+                            {student.name}
+                          </h3>
+                          <p className="text-sm text-gray-500 dark:text-gray-400">
+                            ID: {student.student_Id}
+                          </p>
+                          
+                        </div>
+
+                        <nav className="flex flex-col gap-2">
+                          <Link
+                            to="/profile"
+                            className="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors text-gray-700 dark:text-gray-200"
+                          >
+                            <User size={18} />
+                            Profile
+                          </Link>
+                          <Link
+                            to="/upload"
+                            className="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors text-gray-700 dark:text-gray-200"
+                          >
+                            <UploadCloud size={18} />
+                            Upload Suggestion
+                          </Link>
+                          <button
+                            onClick={handleLogout}
+                            className="flex items-center gap-3 px-3 py-2 rounded-lg text-red-600 hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors mt-4"
+                          >
+                            <LogOut size={18} />
+                            Logout
+                          </button>
+                        </nav>
+                      </div>
+                    </div>
+                  </div>
+                )}
+              </div>
+            ) : (
+              <Link
+                to="/login"
+                className="bg-gradient-to-r from-blue-500 to-teal-500 text-white px-5 py-2.5 rounded-full hover:shadow-lg transition-all flex items-center gap-2"
+              >
+                <User size={18} />
+                <span>Sign In</span>
+              </Link>
             )}
-          </ul>
-        </div>
-      </nav>
-
-      {student && sidebarOpen && (
-        <div
-          className="fixed top-16 right-6 w-72 rounded-xl p-6 z-50 \
-                         bg-white/60 dark:bg-gray-900/60 backdrop-blur-lg border border-gray-200 dark:border-gray-600 shadow-lg shadow-gray-300/30 dark:shadow-black/40"
-        >
-          <button
-            onClick={toggleSidebar}
-            className="absolute top-3 right-3 text-gray-600 dark:text-gray-300 cursor-pointer"
-          >
-            ✖
-          </button>
-
-          <div className="mt-5">
-            <h2 className="text-xl font-semibold text-gray-900 dark:text-amber-300 mb-3">
-              {student.name}
-            </h2>
-            <p className="text-gray-700 dark:text-gray-100 mb-1 text-sm">ID: {student.student_Id}</p>
-            <p className="text-gray-700 dark:text-gray-100 mb-4 text-sm">Stars: {student.stars}</p>
-
-            <div className="flex flex-col gap-3">
-              <Link
-                to="/profile"
-                onClick={() => setSidebarOpen(false)}
-                className="px-3 py-2 rounded hover:bg-gray-100 dark:hover:bg-gray-800 transition text-gray-800 dark:text-gray-100"
-              >
-                Profile
-              </Link>
-              <Link
-                to="/upload"
-                onClick={() => setSidebarOpen(false)}
-                className="px-3 py-2 rounded hover:bg-gray-100 dark:hover:bg-gray-800 transition text-gray-800 dark:text-gray-100"
-              >
-                Upload Suggestion
-              </Link>
-              <button
-                onClick={handleLogout}
-                className="w-full bg-red-600 text-white py-2 rounded hover:bg-red-700 transition"
-              >
-                Logout
-              </button>
-            </div>
           </div>
         </div>
-      )}
+      </nav>
     </>
   );
 };

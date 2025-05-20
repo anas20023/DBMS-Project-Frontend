@@ -118,7 +118,9 @@ const SuggestionCard = ({ suggestion, onVote, loadingVote, st_id }) => {
       <div className="flex justify-end text-sm text-slate-500 dark:text-slate-400">
         <span>Intake {suggestion.intake}</span>
         <span className="mx-2">|</span>
-        <span>Section {suggestion.section}</span>
+        <span>Section  {suggestion.section}</span>
+        <span className="mx-2">|</span>
+        <span>Uploaded by  {suggestion.uploaded_by.substr(-3)}</span>
       </div>
     </div>
   );

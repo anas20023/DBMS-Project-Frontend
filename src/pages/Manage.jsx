@@ -61,6 +61,7 @@ const Manage = () => {
             const res = await fetch("https://sgm.anasibnbelal.live/api/auth/manage/getallusers");
             if (!res.ok) throw new Error("Failed to load users");
             const data = await res.json();
+            console.log(data);
             setUsers(data);
         } catch (err) {
             setError(err.message);

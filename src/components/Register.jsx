@@ -1,11 +1,11 @@
 // src/components/Register.jsx
 
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useAuth } from "../hooks/useAuth";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Navbar from "./Navbar";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import registerIllustration from "../assets/register.png";
 import {
   FiUser,
@@ -19,6 +19,8 @@ import {
 
 export default function Register() {
   const { register, loading, error } = useAuth();
+  const navigate = useNavigate();
+
   const [form, setForm] = useState({
     name: "",
     student_Id: "",
@@ -29,35 +31,62 @@ export default function Register() {
     password: "",
   });
 
-  const handleChange = (e) =>
-    setForm({ ...form, [e.target.name]: e.target.value });
+  const [passwordErrors, setPasswordErrors] = useState([]);
 
-  const handleSubmit = (e) => {
+  const validatePassword = (password) => {
+    const errors = [];
+    if (password.length < 8) errors.push("At least 8 characters");
+    if (!/[A-Z]/.test(password)) errors.push("At least one uppercase letter");
+    if (!/[a-z]/.test(password)) errors.push("At least one lowercase letter");
+    if (!/[0-9]/.test(password)) errors.push("At least one number");
+    if (!/[^A-Za-z0-9]/.test(password)) errors.push("At least one special character");
+    return errors;
+  };
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setForm({ ...form, [name]: value });
+
+    if (name === "password") {
+      const errors = validatePassword(value);
+      setPasswordErrors(errors);
+    }
+  };
+
+  const handleSubmit =async (e) => {
     e.preventDefault();
-    register({ ...form, intake: Number(form.intake) })
-      .then((res) => res.success && toast.success("Registered successfully!"))
-      .catch(() => toast.error("Registration failed!"));
+    const data = await register({ ...form, intake: Number(form.intake) });
+
+    if (data.success) {
+      toast.success('Registered successfully!', {
+        autoClose: 3000,               // toast shows for 3 seconds
+        onClose: () => navigate('/login')
+      });
+    } 
+      
   };
 
   useEffect(() => {
     if (error) toast.error(error);
   }, [error]);
 
+  const isPasswordValid = passwordErrors.length === 0;
+
   const fields = [
-    { label: "Full Name", name: "name", type: "text", icon: <FiUser className="w-5 h-5 text-gray-400" /> },
-    { label: "Student ID", name: "student_Id", type: "text", icon: <FiHash className="w-5 h-5 text-gray-400" /> },
-    { label: "Department", name: "dept", type: "text", icon: <FiBook className="w-5 h-5 text-gray-400" /> },
-    { label: "Intake", name: "intake", type: "number", icon: <FiCalendar className="w-5 h-5 text-gray-400" /> },
-    { label: "Section", name: "section", type: "text", icon: <FiAward className="w-5 h-5 text-gray-400" /> },
-    { label: "Email", name: "email", type: "email", icon: <FiMail className="w-5 h-5 text-gray-400" /> },
-    { label: "Password", name: "password", type: "password", icon: <FiLock className="w-5 h-5 text-gray-400" /> },
+    { placehldr: "Ex: Anas Ibn Belal", label: "Full Name", name: "name", type: "text", icon: <FiUser className="w-5 h-5 text-gray-400" /> },
+    { placehldr: "Ex: 20234103XXX", label: "Student ID", name: "student_Id", type: "text", icon: <FiHash className="w-5 h-5 text-gray-400" /> },
+    { placehldr: "Ex: CSE, EEE etc", label: "Department", name: "dept", type: "text", icon: <FiBook className="w-5 h-5 text-gray-400" /> },
+    { placehldr: "Ex: 52", label: "Intake", name: "intake", type: "number", icon: <FiCalendar className="w-5 h-5 text-gray-400" /> },
+    { placehldr: "Ex: 10", label: "Section", name: "section", type: "text", icon: <FiAward className="w-5 h-5 text-gray-400" /> },
+    { placehldr: "Ex: name@domain.com", label: "Email", name: "email", type: "email", icon: <FiMail className="w-5 h-5 text-gray-400" /> },
+    { placehldr: "Unique and Strong Password", label: "Password", name: "password", type: "password", icon: <FiLock className="w-5 h-5 text-gray-400" /> },
   ];
 
   return (
     <>
       <Navbar />
       <ToastContainer
-        position="top-center"
+        position="top-right"
         autoClose={3000}
         theme="colored"
         toastClassName="shadow-xl"
@@ -66,6 +95,7 @@ export default function Register() {
       <div className="min-h-[90vh] flex items-center justify-center bg-gradient-to-br from-teal-50 to-white dark:from-gray-900 dark:to-gray-800">
         <div className="w-full max-w-7xl mx-4 my-8 bg-white dark:bg-gray-800 rounded-3xl shadow-2xl overflow-hidden">
           <div className="grid lg:grid-cols-2">
+
             {/* Illustration Section */}
             <div className="hidden lg:flex bg-gradient-to-br from-teal-500 to-emerald-600 dark:from-gray-800 dark:to-gray-900 p-12 flex-col justify-between">
               <div className="space-y-8">
@@ -107,7 +137,7 @@ export default function Register() {
 
                 <form onSubmit={handleSubmit} className="space-y-6">
                   <div className="grid gap-6">
-                    {fields.map(({ label, name, type, icon }) => (
+                    {fields.map(({ placehldr, label, name, type, icon }) => (
                       <div key={name} className="flex flex-col">
                         <label
                           htmlFor={name}
@@ -123,21 +153,30 @@ export default function Register() {
                             type={type}
                             name={name}
                             id={name}
-                            placeholder={label}
+                            placeholder={placehldr}
                             value={form[name]}
                             onChange={handleChange}
                             required
                             className="w-full pl-11 pr-4 py-3.5 bg-gray-100 dark:bg-gray-700 rounded-xl border border-gray-200 dark:border-gray-600 placeholder-gray-400 dark:placeholder-gray-500 focus:ring-2 focus:ring-teal-500 focus:border-transparent outline-none transition-all"
                           />
                         </div>
+
+                        {/* Password validation errors */}
+                        {name === "password" && passwordErrors.length > 0 && (
+                          <ul className="mt-2 text-sm text-red-500 list-disc list-inside space-y-1">
+                            {passwordErrors.map((err, idx) => (
+                              <li key={idx}>{err}</li>
+                            ))}
+                          </ul>
+                        )}
                       </div>
                     ))}
                   </div>
 
                   <button
                     type="submit"
-                    disabled={loading}
-                    className="w-full py-4 bg-gradient-to-r from-teal-500 to-emerald-600 hover:from-teal-600 hover:to-emerald-700 text-white font-semibold rounded-xl shadow-lg transition-all transform hover:scale-[1.02] disabled:opacity-70 disabled:cursor-not-allowed flex items-center justify-center space-x-2"
+                    disabled={loading || !isPasswordValid}
+                    className="w-full cursor-pointer py-4 bg-gradient-to-r from-teal-500 to-emerald-600 hover:from-teal-600 hover:to-emerald-700 text-white font-semibold rounded-xl shadow-lg transition-all transform hover:scale-[1.02] disabled:opacity-70 disabled:cursor-not-allowed flex items-center justify-center space-x-2"
                   >
                     {loading ? (
                       <>
@@ -187,6 +226,7 @@ export default function Register() {
                 </p>
               </div>
             </div>
+
           </div>
         </div>
       </div>

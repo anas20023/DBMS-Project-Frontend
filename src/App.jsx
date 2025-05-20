@@ -10,7 +10,7 @@ import AdminProtectionRoute from "./components/AdminProtectionRoute"
 import Manage from "./pages/Manage"
 import AdminLogin from "./pages/AdminLogin"
 
-function App() {
+const App=() => {
   return (
     <Routes>
       <Route path="/" element={<Home />} />

@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { FaStar, FaDownload, FaPaperclip } from "react-icons/fa";
+import { FaStar, FaDownload, FaPaperclip, FaSpinner } from "react-icons/fa";
 
 const SuggestionCard = ({ suggestion, onVote, loadingVote, st_id }) => {
   const [hasVoted, setHasVoted] = useState(false);
+  const [isVoting, setIsVoting] = useState(false);
 
   useEffect(() => {
     const studentAll = localStorage.getItem("student_all");
@@ -33,9 +34,10 @@ const SuggestionCard = ({ suggestion, onVote, loadingVote, st_id }) => {
 
   const handleVote = async () => {
 
+    setIsVoting(true);
     await onVote(suggestion.id);
-    // Optimistically disable the button
     setHasVoted(true);
+    setIsVoting(false);
   };
 
   const attachName = suggestion.course_name
@@ -51,7 +53,7 @@ const SuggestionCard = ({ suggestion, onVote, loadingVote, st_id }) => {
           CSE
         </div>
         <div className="flex items-center gap-1 text-sm font-medium text-slate-600 dark:text-slate-300">
-          <span className={`text-white ${suggestion.exam_type!=="Midterm"?"bg-[#2E073F]":"bg-[#7A1CAC]"} px-2 py-1 rounded`}>
+          <span className={`text-white ${suggestion.exam_type !== "Midterm" ? "bg-[#2E073F]" : "bg-[#7A1CAC]"} px-2 py-1 rounded`}>
             {suggestion.exam_type}
           </span>
           <span className="ml-2 flex items-center gap-1 text-yellow-400">
@@ -60,14 +62,19 @@ const SuggestionCard = ({ suggestion, onVote, loadingVote, st_id }) => {
           </span>
           <button
             onClick={handleVote}
-            disabled={loadingVote || hasVoted}
-            className={`ml-2 px-2 py-1 rounded text-xs font-semibold ${
-              hasVoted
+            disabled={loadingVote || hasVoted || isVoting}
+            className={`ml-2 px-2 py-1 rounded text-xs font-semibold flex items-center gap-1 ${hasVoted
                 ? "bg-green-600 cursor-not-allowed"
                 : "bg-rose-500 hover:bg-rose-600 cursor-pointer"
-            } text-white`}
+              } text-white`}
           >
-            {hasVoted ? "Voted" : "Vote"}
+            {isVoting ? (
+              <FaSpinner className="animate-spin" />
+            ) : hasVoted ? (
+              "Voted"
+            ) : (
+              "Vote"
+            )}
           </button>
         </div>
       </div>

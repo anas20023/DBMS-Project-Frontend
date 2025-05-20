@@ -89,7 +89,7 @@ export default function Upload() {
                 <div className="absolute -bottom-6 -right-6 w-24 h-24 bg-blue-100/20 rounded-full" />
                 <div className="relative space-y-4">
                   <h1 className="text-4xl font-bold text-white">
-                    Share Your Knowledge
+                    Share Your Materials
                   </h1>
                   <p className="text-lg text-blue-100/90 leading-relaxed">
                     Upload your course materials and help create a collaborative
@@ -180,10 +180,10 @@ export default function Upload() {
                     onChange={handleChange}
                     required
                     rows="4"
-                    className="w-full px-4 py-3 bg-gray-50 dark:bg-gray-700 rounded-xl border border-gray-200 dark:border-gray-600 focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none transition-all peer"
+                    className="w-full px-4 py-3 bg-gray-50 dark:text-white dark:bg-gray-700 rounded-xl border border-gray-200 dark:border-gray-600 focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none transition-all peer"
                     placeholder=" "
                   />
-                  <label className="absolute left-4 -top-2 text-sm text-gray-500 dark:text-gray-400 pointer-events-none transition-all duration-200 peer-placeholder-shown:text-base peer-placeholder-shown:top-3.5 peer-focus:-top-2 peer-focus:text-sm peer-focus:text-blue-600 dark:peer-focus:text-blue-400 bg-white dark:bg-gray-700 px-2">
+                  <label className="absolute left-4 -top-2 text-sm text-gray-500 dark:text-gray-400 pointer-events-none transition-all duration-200 peer-placeholder-shown:text-base peer-placeholder-shown:top-3.5 peer-focus:-top-2 peer-focus:text-sm peer-focus:text-blue-600 dark:peer-focus:text-blue-400 bg-gray-50 dark:bg-gray-700 px-2">
                     Description
                   </label>
                 </div>

@@ -28,19 +28,19 @@ const Navbar = () => {
   return (
     <>
       <nav className="bg-white/80 dark:bg-gray-900/80 backdrop-blur-lg border-b border-gray-200 dark:border-gray-700 py-4 px-6 sticky top-0 z-50 shadow-sm">
-        <div className="max-w-7xl mx-auto flex justify-between items-center">
+        <div className="max-w-6xl mx-auto flex justify-between items-center">
           <Link to="/" className="flex items-center gap-3 group">
             <img 
               src={logo} 
               alt="Logo" 
               className="w-9 h-9 transition-transform group-hover:scale-105" 
             />
-            <span className="text-xl font-bold bg-gradient-to-r from-blue-600 to-teal-500 bg-clip-text text-transparent dark:from-blue-400 dark:to-teal-300">
-              Suggy
+            <span className="text-xl hidden md:block font-bold bg-gradient-to-r from-blue-600 to-teal-500 bg-clip-text text-transparent dark:from-blue-400 dark:to-teal-300">
+              Suggsestion Sharing Platform
             </span>
           </Link>
 
-          <div className="flex items-center gap-6">
+          <div className="flex items-center gap-2">
             <button
               onClick={toggleTheme}
               className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors cursor-pointer"
@@ -54,7 +54,14 @@ const Navbar = () => {
             </button>
 
             {student ? (
-              <div className="relative">
+              <div className="flex flex-row items-center gap-2 lg:gap-4">
+                 <Link
+                            to="/upload"
+                            className="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors text-gray-700 dark:text-gray-200"
+                          >
+                            <UploadCloud size={18} />
+                            Upload
+                          </Link>
                 <button
                   onClick={() => setSidebarOpen(!sidebarOpen)}
                   className="w-10 h-10 cursor-pointer rounded-full bg-gradient-to-br from-blue-500 to-teal-400 flex items-center justify-center hover:shadow-lg transition-all"

@@ -120,7 +120,7 @@ export default function Login() {
                     Authenticating...
                   </>
                 ) : (
-                  "Continue"
+                  "Login"
                 )}
               </button>
             </form>
